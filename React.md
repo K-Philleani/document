@@ -411,9 +411,11 @@ class App extends React.Component {
 
 
 ```javascript
-#. 1.挂载
+# 1.挂载
+# 2.更新 setState
 
 class App extends React.Component {
+  // 构造函数
   constructor(props) {
     super(props)
     console.log('constructor') // => 1, 1次
@@ -421,27 +423,115 @@ class App extends React.Component {
       count: 0
     }
   }
-  componentWillMount() { // 已经被移除
+  // 组件将要挂载
+  componentWillMount() { // 这个生命周期已经被移除
     console.log('componentWillMount') // => 2， 1次
   }
+  // 组件已经挂载
   componentDidMount() {
     console.log('componentDidMount') // => 4， 1次
   }
-
+  
+  // 控制组件更新
+  // 不单独声明，则默认返回true,返回值必须为布尔值， 返回true则更新，继续其他生命周期，返回false则停止
+  shouldComponentUpdate() {
+    console.log('shouldComponentUpdate')
+    return true
+  }
+  
+  // 组件将要更新
+  componentWillUpdate() { // 这个生命周期已经被移除
+    console.log('componentWillUpdate')
+  }
+  
+  // 组件已经更新
+  componentDidUpdate() {
+    console.log('componentDidUpdate')
+  }
+  
+  // 组件将被移除
+  componentWillUnmount() {
+    console.log('componentWillUnmount') // => 5. 1次
+  }
+  // 组件渲染
   render() {
     console.log('render') // => 3， 1+n次
     return (
       <div>
         React生命周期--{this.state.count}
         <button onClick={() => this.change()}>click</button>
+        <button onClick={() => this.remove()}>remove</button>
       </div>
     )
   }
+  // 更新状态
   change() {
     let count = this.state.count
     this.setState({ count: count + 1}) // React不支持自增(++)自减(--)
   }
+  // 卸载组件
+  remove() {
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'))
+  }
+  // 强制更新
+  force() {
+    this.forceUpdate()
+  }
 }
+```
+
+```javascript
+# 父子更新触发子组件
+
+class Child extends React.Component {
+  // 组件将要接收新的props
+  componentWillReceiveProps() { // 这个生命周期已经被移除
+    console.log('Child, componentWillReceiveProps')
+  }
+  
+  // 控制组件更新
+   shouldComponentUpdate() {
+    console.log('shouldComponentUpdate')
+    return true
+  }
+ 
+  // 组件将要更新
+  componentWillUpdate() { // 这个生命周期已经被移除
+    console.log('componentWillUpdate')
+  }
+  
+  // 组件已经更新
+  componentDidUpdate() {
+    console.log('componentDidUpdate')
+  }
+  
+  render() {
+    console.log('render')
+    return (
+      <div>child {this.props.count}</div>
+    )
+  }
+}
+class App extends React.Component {
+  state = {
+    count: 0
+  }
+  change() {
+    let count = this.state.count
+    this.setState({ count: count + 1 })
+  }
+  render() {
+    return (
+      <div>
+        <Child />
+        <div>father</div>
+        <div>{this.state.count}</div>
+        <button onClick={() => this.change()}>change</button>
+      </div>
+    )
+  }
+}
+
 ```
 
 
