@@ -1,10 +1,4 @@
-
-
-# React
-
-
-
-## 三大核心属性
+## （一）组件三大核心属性
 
 1. state
 2. props
@@ -335,3 +329,130 @@ class App extends React.Component {
   }
 }
 ```
+
+## 6.非受控组件
+
+```javascript
+# 在大多数情况下，推荐使用 受控组件 来处理表单数据。在一个受控组件中，表单数据是由 React 组件来管理的。
+# 另一种替代方案是使用非受控组件，这时表单数据将交由 DOM 节点来处理。
+
+class App extends React.Component {
+  submit(event) {
+    event.preventDefault()
+    console.log('username:', this.username.value, 'password:', this.password.value)
+  }
+  render() {
+    return (
+      <div>
+        <form action="#" onSubmit={(event) => this.submit(event)}>
+          <input ref={e => this.username = e} type="text" name="username" />
+          <input ref={e => this.password = e} type="password" name="password" />
+          <button>提交</button>
+        </form>
+      </div>
+    )
+  }
+}
+```
+
+
+
+## 7.受控组件
+
+```javascript
+
+class App extends React.Component {
+  state = {
+    username: '',
+    password: ''
+  }
+  changeUsername(e) {
+    this.setState({ username: e.target.value })
+  }
+  changePassword(e) {
+    this.setState({ password: e.target.value })
+  }
+  submit(event) {
+    event.preventDefault()
+    console.log('username:', this.state.username, 'password:', this.state.password)
+  }
+  render() {
+    return (
+      <div>
+        <form action="#" onSubmit={(event) => this.submit(event)}>
+          <label htmlFor="username">username</label>
+          <input onChange={(e) => this.changeUsername(e)} type="text" name="username" />
+          <label htmlFor="password">password</label>
+          <input onChange={(e) => this.changePassword(e)} type="password" name="password" />
+          <button>提交</button>
+        </form>
+      </div>
+    )
+  }
+}
+```
+
+
+
+- 高阶函数：满足以下两点中的一点
+  1. 接受的参数是一个函数，
+  2. 调用的返回值是一个函数
+- 函数的柯里化： 通过函数调用继续返回函数的方式，实现多次接受参数最后统一处理的函数编码形式
+  - setTimeout,promise, js数组api...
+
+
+
+## （二）组件生命周期
+
+## 1.旧版本
+
+## ![img](https://cdn.nlark.com/yuque/0/2021/png/271392/1638797530242-92ddc687-7199-4456-9c71-306b6e789cb6.png)
+
+
+
+```javascript
+#. 1.挂载
+
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    console.log('constructor') // => 1, 1次
+    this.state = {
+      count: 0
+    }
+  }
+  componentWillMount() { // 已经被移除
+    console.log('componentWillMount') // => 2， 1次
+  }
+  componentDidMount() {
+    console.log('componentDidMount') // => 4， 1次
+  }
+
+  render() {
+    console.log('render') // => 3， 1+n次
+    return (
+      <div>
+        React生命周期--{this.state.count}
+        <button onClick={() => this.change()}>click</button>
+      </div>
+    )
+  }
+  change() {
+    let count = this.state.count
+    this.setState({ count: count + 1}) // React不支持自增(++)自减(--)
+  }
+}
+```
+
+
+
+## 2.新版本
+
+![img](https://cdn.nlark.com/yuque/0/2021/png/271392/1638798215485-187b5b83-9697-4d31-94c7-48a8a7212730.png )
+
+
+
+
+
+
+
