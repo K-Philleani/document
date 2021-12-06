@@ -1,3 +1,5 @@
+
+
 # React
 
 
@@ -150,6 +152,7 @@ class Cat extends React.Component {
 ```javascript
 # 3.函数式组件使用props
 # 函数式组件默认无法使用state和refs
+
 function Cat(props) {
   const { name, age, sex } = props
   return (
@@ -230,6 +233,7 @@ class Cat extends React.Component {
 
 ```javascript
 # 3.函数式组件对props进行限制
+
 function Cat(props) {
   const { name, age, sex } = props
   return (
@@ -253,3 +257,81 @@ Cat.defaultProps = {
 }
 ```
 
+## 5.Refs
+
+- 管理焦点，文本选择或媒体播放。
+- 触发强制动画。
+- 集成第三方 DOM 库。
+
+```javascript
+# 1.字符串ref（已废除,存在效率问题）
+
+class App extends React.Component {
+  focus() {
+    this.refs.refInput.focus()
+  }
+  get() {
+    console.log(this.refs.refInput.value)
+  }
+  render() {
+    return (
+      <div>
+        <input ref="refInput" type="text" placeholder="获取焦点" />
+        <button onClick={() => this.focus()}>获取焦点</button>
+        <button onClick={() => this.get()}>获取数据</button>
+      </div>
+    )
+  }
+}
+```
+
+```javascript
+# 2.回调形式
+
+class App extends React.Component {
+  focus() {
+    this.refInput.focus()
+  }
+  get() {
+    console.log(this.refInput.value)
+  }
+  render() {
+    return (
+      <div>
+        <input ref={ (element) => this.refInput = element } type="text" placeholder="获取焦点" />
+        <button onClick={() => this.focus()}>获取焦点</button>
+        <button onClick={() => this.get()}>获取数据</button>
+      </div>
+    )
+  }
+}
+```
+
+- 如果 `ref` 回调函数是以内联函数的方式定义的，在更新过程中它会被执行两次，第一次传入参数 `null`，然后第二次会传入参数 DOM 元素。这是因为在每次渲染时会创建一个新的函数实例，所以 React 清空旧的 ref 并且设置新的。通过将 ref 的回调函数定义成 class 的绑定函数的方式可以避免上述问题，但是大多数情况下它是无关紧要的。
+
+```javascript
+# 3.通过React.CreateRef()创建refs
+# React.CreateRef调用后返回一个容器，可以存储被ref标识的节点，一个容器存放一个ref节点
+
+class App extends React.Component {
+  constructor() {
+    super()
+    this.refInput = React.createRef()
+  }
+  focus() {
+    this.refInput.current.focus()
+  }
+  get() {
+    console.log(this.refInput.current.value)
+  }
+  render() {
+    return (
+      <div>
+        <input ref={ this.refInput } type="text" placeholder="获取焦点" />
+        <button onClick={() => this.focus()}>获取焦点</button>
+        <button onClick={() => this.get()}>获取数据</button>
+      </div>
+    )
+  }
+}
+```
