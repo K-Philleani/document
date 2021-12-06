@@ -106,11 +106,11 @@ class App extends React.Component {
 ## 3.Props
 
 ```javascript
-# 1.props基本使用
+# 1.props基本使用, props是只读的
 
-<Person name="生巧" age="3" sex="fale" />
+<Cat name="生巧" age="3" sex="fale" />
 
-class Person extends React.Component {
+class Cat extends React.Component {
   render() {
     const { name, age, sex } = this.props
     return (
@@ -128,11 +128,11 @@ class Person extends React.Component {
 # 2.批量props
 
 const p = { name: "生巧", age: "3", sex: "fale" }
-<Person {...p} />
+<Cat {...p} />
 // {...p} => ...p 并非是ES6的对象解构, ES6对象不能直接解构，应该在一个对象内解构
 // {...p}是React的优化写法,babel和react会进行处理，仅仅适用于标签上
 
-class Person extends React.Component {
+class Cat extends React.Component {
   render() {
     const { name, age, sex } = this.props
     return (
@@ -145,5 +145,111 @@ class Person extends React.Component {
   }
 }
 
+```
+
+```javascript
+# 3.函数式组件使用props
+# 函数式组件默认无法使用state和refs
+function Cat(props) {
+  const { name, age, sex } = props
+  return (
+      <div>
+        <div>name: { name }</div>
+        <div>age: { age }</div>
+        <div>sex: { sex }</div>
+      </div>
+    )
+}
+```
+
+
+
+## 4.对Props进行限制&&默认值
+
+```javascript
+# 1.PropTypes对Props进行约束
+# 依赖React.propTypes， React15.5开始改为独立的库prop-types
+
+import PropTypes from 'prop-types'
+
+class Cat extends React.Component {
+  render() {
+    const { name, age, sex } = this.props
+    return (
+      <div>
+        <div>name: { name }</div>
+        <div>age: { age + 1}</div>
+        <div>sex: { sex }</div>
+      </div>
+    )
+  }
+}
+
+Cat.propTypes = {
+  name: PropTypes.string,
+  age: PropTypes.number,
+  sex: PropTypes.string
+}
+
+Cat.defaultProps = {
+  name: 'tom',
+  age: 10,
+  sex: 'fale'
+}
+```
+
+```javascript
+# 优化写法
+
+import PropTypes from 'prop-types'
+
+class Cat extends React.Component {
+  static propTypes = {
+    name: PropTypes.string.isRequired,
+    age: PropTypes.number,
+    sex: PropTypes.string
+  }
+  static defaultProps = {
+    name: 'tom',
+    age: 10,
+    sex: 'fale'
+  }
+  render() {
+    const { name, age, sex } = this.props
+    return (
+      <div>
+        <div>name: { name }</div>
+        <div>age: { age + 1 }</div>
+        <div>sex: { sex }</div>
+      </div>
+    )
+  }
+}
+
+```
+
+```javascript
+# 3.函数式组件对props进行限制
+function Cat(props) {
+  const { name, age, sex } = props
+  return (
+      <div>
+        <div>name: { name }</div>
+        <div>age: { age }</div>
+        <div>sex: { sex }</div>
+      </div>
+    )
+}
+Cat.propTypes = {
+  name: PropTypes.string,
+  age: PropTypes.number,
+  sex: PropTypes.string
+}
+
+Cat.defaultProps = {
+  name: 'tom',
+  age: 10,
+  sex: 'fale'
+}
 ```
 
