@@ -651,7 +651,104 @@ class App extends React.Component {
 
 
 
+```javascript
+# 新加入的生命周期：getDerivedStateFromProps(极少使用)
 
+<App count={200} />
+    
+class App extends React.Component {
+  // 构造器
+  constructor(props) {
+    console.log('constructor')
+    super(props)
+    this.state = {
+      count: 0
+    }
+  }
+  componentDidMount() {
+    console.log('componentDidMount')
+  }
+  // getDerivedStateFromProps 会在调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用。
+  // 它应返回一个对象来更新 state，如果返回 null 则不更新任何内容
+  // 此方法适用于罕见的用例，即 state 的值在任何时候都取决于 props。
+  // 例如，实现 <Transition> 组件可能很方便，该组件会比较当前组件与下一组件，以决定针对哪些组件进行转场动画。
+  // 派生状态会导致代码冗余，并使组件难以维护
+  static getDerivedStateFromProps(props) {
+    console.log('getDerivedStateFormProps', props)
+    return {
+      count: props.count
+    }
+  }
+
+  // 组件渲染
+  render () {
+    console.log('render')
+    return (
+      <div>
+      React声明周期
+      <div>{this.state.count}</div>
+      <button onClick={() => this.change()}>change</button>
+      <button onClick={() => this.remove()}>remove</button>
+      <button onClick={() => this.force()}>force</button>
+      </div>
+    )
+  }
+  change() {
+    const count = this.state.count
+    this.setState({ count: count + 1 })
+  }
+  remove() {
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'))
+  }
+  force() {
+    this.forceUpdate()
+  }
+}
+```
+
+
+
+```javascript
+# 新加入的生命周期：getSnapshotBeforeUpdate(极少使用)
+
+class App extends React.Component {
+  // 构造器
+  constructor(props) {
+    console.log('constructor')
+    super(props)
+    this.state = {
+      count: 0
+    }
+  }
+  // getSnapshotBeforeUpdate() 在最近一次渲染输出（提交到 DOM 节点）之前调用。它使得组件能在发生更改之前从 DOM 中捕获一些信息（例如，滚动位置）。
+  // 此生命周期方法的任何返回值将作为参数传递给 componentDidUpdate()。
+  // componentDidUpdate必须存在
+  // 更新前获取快照
+  getSnapshotBeforeUpdate() {
+    console.log('getSnapshotBeforeUpdate')
+    return 'getSnapshotBeforeUpdate'
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    console.log('componentDidUpdate', prevProps, prevState, snapshot)
+  }
+
+  // 组件渲染
+  render () {
+    console.log('render')
+    return (
+      <div>
+      React声明周期
+      <div>{this.state.count}</div>
+      <button onClick={() => this.change()}>change</button>
+      </div>
+    )
+  }
+  change() {
+    const count = this.state.count
+    this.setState({ count: count + 1 })
+  }
+}
+```
 
 
 
