@@ -1,8 +1,10 @@
-## （一）组件三大核心属性
+#	（一）组件三大核心属性
 
 1. state
 2. props
 3. refs与事件处理
+
+- **我们强烈建议你不要创建自己的组件基类。** 在 React 组件中，代码重用的主要方式是组合而不是继承
 
 ## 1.state
 
@@ -400,19 +402,17 @@ class App extends React.Component {
 - 函数的柯里化： 通过函数调用继续返回函数的方式，实现多次接受参数最后统一处理的函数编码形式
   - setTimeout,promise, js数组api...
 
-
-
-## （二）组件生命周期
+#	（二）组件生命周期
 
 ## 1.旧版本
 
-## ![img](https://cdn.nlark.com/yuque/0/2021/png/271392/1638797530242-92ddc687-7199-4456-9c71-306b6e789cb6.png)
+## ![img](https://cdn.nlark.com/yuque/0/2021/png/271392/1638797530242-92ddc687-7199-4456-9c71-306b6e789cb6.png) 
 
 
 
 ```javascript
 # 1.挂载
-# 2.更新 setState
+# 2.更新 setState forupdate
 
 class App extends React.Component {
   // 构造函数
@@ -424,7 +424,7 @@ class App extends React.Component {
     }
   }
   // 组件将要挂载
-  componentWillMount() { // 这个生命周期已经被移除
+  componentWillMount() { // 这个生命周期已经rename
     console.log('componentWillMount') // => 2， 1次
   }
   // 组件已经挂载
@@ -440,7 +440,7 @@ class App extends React.Component {
   }
   
   // 组件将要更新
-  componentWillUpdate() { // 这个生命周期已经被移除
+  componentWillUpdate() { // 这个生命周期已经rename
     console.log('componentWillUpdate')
   }
   
@@ -461,6 +461,7 @@ class App extends React.Component {
         React生命周期--{this.state.count}
         <button onClick={() => this.change()}>click</button>
         <button onClick={() => this.remove()}>remove</button>
+	    <button onClick={() => this.force()}>force</button>
       </div>
     )
   }
@@ -471,7 +472,7 @@ class App extends React.Component {
   }
   // 卸载组件
   remove() {
-    ReactDOM.unmountComponentAtNode(document.getElementById('root'))
+    ReactDOM.unmountComponentAtNode(document.getElementById('root')) // ReactDOM 主动卸载组件
   }
   // 强制更新
   force() {
@@ -481,11 +482,11 @@ class App extends React.Component {
 ```
 
 ```javascript
-# 父子更新触发子组件
+# 父组件更新触发子组件
 
 class Child extends React.Component {
   // 组件将要接收新的props
-  componentWillReceiveProps() { // 这个生命周期已经被移除
+  componentWillReceiveProps() { // 这个生命周期已经rename
     console.log('Child, componentWillReceiveProps')
   }
   
@@ -496,7 +497,7 @@ class Child extends React.Component {
   }
  
   // 组件将要更新
-  componentWillUpdate() { // 这个生命周期已经被移除
+  componentWillUpdate() { // 这个生命周期已经rename
     console.log('componentWillUpdate')
   }
   
@@ -532,6 +533,114 @@ class App extends React.Component {
   }
 }
 
+```
+
+## 2.更名的声明周期
+
+```javascript
+# 1.挂载
+# 2.更新 setState forupdate
+
+class App extends React.Component {
+  // 构造器
+  constructor(props) {
+    console.log('constructor')
+    super(props)
+    this.state = {
+      count: 0
+    }
+  }
+  // 组件将要挂载
+  UNSAFE_componentWillMount() {
+    console.log('UNSAFE_componentWillMount')
+  }
+  // 组件已经挂载
+  componentDidMount() {
+    console.log('componentDidMount')
+  }
+  // 组件将要卸载
+  componentWillUnmount() {
+    console.log('componentWillUnmount')
+  }
+  // 控制组件更新
+  shouldComponentUpdate() {
+    console.log('shouldComponentUpdate')
+    return false
+  }
+  // 组件将要更新
+  UNSAFE_componentWillUpdate() { 
+    console.log('UNSAFE_componentWillUpdate')
+  }
+  // 组件已经更新
+  componentDidUpdate() {
+    console.log('componentDidUpdate')
+  }
+  // 组件渲染
+  render () {
+    console.log('render')
+    return (
+      <div>
+      React声明周期
+      <div>{this.state.count}</div>
+      <button onClick={() => this.change()}>change</button>
+      <button onClick={() => this.remove()}>remove</button>
+      <button onClick={() => this.force()}>force</button>
+      </div>
+    )
+  }
+  change() {
+    const count = this.state.count
+    this.setState({ count: count + 1 })
+  }
+  remove() {
+    ReactDOM.unmountComponentAtNode(document.getElementById('root'))
+  }
+  force() {
+    this.forceUpdate()
+  }
+}
+
+```
+
+
+
+```javascript
+# 父组件更新触发子组件
+
+class Child extends React.Component {
+  // 组件将要接收新的props
+  UNSAFE_componentWillReceiveProps() {
+    console.log('UNSAFE_componentWillReceiveProps')
+  }
+  render() {
+    return (
+      <div>
+        <div>Child</div>
+        <div>{this.props.count}</div>
+      </div>
+    )
+  }
+}
+
+class App extends React.Component {
+  state = {
+    count: 0
+  }
+  render() {
+    return (
+      <div>
+        <Child count={this.state.count} />
+        <div>Father</div>
+        <div>{this.state.count}</div>
+        <button onClick={() => this.change()}>change</button>
+      </div>
+    )
+  }
+  change() {
+    const count = this.state.count
+    this.setState({ count: count + 1 })
+  }
+}
 ```
 
 
