@@ -756,31 +756,31 @@ class App extends React.Component {
 
 ##	1.相关Api
 
-	###		1.	<BrowserRouter>：使用 HTML5 历史 API 记录（ `pushState`，`replaceState` 和 `popstate` 事件）的 Router
+1. <BrowserRouter>：使用 HTML5 历史 API 记录（ `pushState`，`replaceState` 和 `popstate` 事件）的 Router
 
-	###		2.	<HashRouter>：使用 URL 的 hash 部分（即 window.location.hash ）的 `<Router>` 
+2.	<HashRouter>：使用 URL 的 hash 部分（即 window.location.hash ）的 `<Router>` 
 
-###		3.	<Router>：Router 是所有路由组件共用的底层接口
+3.	<Router>：Router 是所有路由组件共用的底层接口
 
-	###		4.	<Redirect>:  渲染 `<Redirect>` 将使导航到一个新的地址
+4.	<Redirect>:  渲染 `<Redirect>` 将使导航到一个新的地址
 
-		### 	5.	<Link>:  在应用程序周围提供声明式的,可访问的导航
+5.	<Link>:  在应用程序周围提供声明式的,可访问的导航
 
-###		6.	<NavLink>:  一个特殊版本的 Link，当它与当前 URL 匹配时，为其渲染元素添加样式属性。
+6.	<NavLink>:  一个特殊版本的 Link，当它与当前 URL 匹配时，为其渲染元素添加样式属性。
 
-###		7.	<Switch>:  渲染与该地址匹配的第一个子节点 `<Route>` 或者 `<Redirect>`
+7.	<Switch>:  渲染与该地址匹配的第一个子节点 `<Route>` 或者 `<Redirect>`
 
-	###		8.	<Route>:  基本的职责是在 location 与 Route 的 path 匹配时呈现一些 UI
+8.	<Route>:  基本的职责是在 location 与 Route 的 path 匹配时呈现一些 UI
 
 
 
 ##	2.其他
 
-	###		1.	history对象:  提供多种不同的形式来实现对 session 历史的管理
+1.	history对象:  提供多种不同的形式来实现对 session 历史的管理
 
-###		2.	match对象:  包涵了有关如何匹配 URL 的信息
+2.	match对象:  包涵了有关如何匹配 URL 的信息
 
-###		3.	withRouter对象:  访问 [`history`](http://react-router.docschina.org/web/api/history) 对象的属性和最近的 `<Route>`和match
+3.	withRouter对象:  访问 history`对象的属性和最近的` `<Route>`和match
 
 ```javascript
 # 1.路由实例,新版本写法
