@@ -752,29 +752,31 @@ class App extends React.Component {
 
 
 
-#	（三）路由（react-router-dom）
+#	（三）路由（react-router-dom v6）
 
-##	1.相关Api
+##	1. React路由
 
-1. <BrowserRouter>：使用 HTML5 历史 API 记录（ `pushState`，`replaceState` 和 `popstate` 事件）的 Router
+ -	React路由有三种：
+   1. react-router: 可用于原生移动端RN和web，也是另外两个库的核心库，用作程序包的对等依赖
+   2. react-router-dom: 用于web
+   3. react-router-native: 用于React-native
 
-2.	<HashRouter>：使用 URL 的 hash 部分（即 window.location.hash ）的 `<Router>` 
+##	2.相关Api
 
-3.	<Router>：Router 是所有路由组件共用的底层接口
-
-4.	<Redirect>:  渲染 `<Redirect>` 将使导航到一个新的地址
-
-5.	<Link>:  在应用程序周围提供声明式的,可访问的导航
-
-6.	<NavLink>:  一个特殊版本的 Link，当它与当前 URL 匹配时，为其渲染元素添加样式属性。
-
-7.	<Switch>:  渲染与该地址匹配的第一个子节点 `<Route>` 或者 `<Redirect>`
-
-8.	<Route>:  基本的职责是在 location 与 Route 的 path 匹配时呈现一些 UI
-
+1. <BrowserRouter>：使用 HTML5 历史 API (history api)记录（ `pushState`，`replaceState` 和 `popstate` 事件）的 Router
+2. <HashRouter>：使用 URL 的 hash 部分（即 window.location.hash ）的 `<Router>` 
+3. <Router>：Router 是所有路由组件共用的底层接口
+4. <Redirect>:  渲染 `<Redirect>` 将使导航到一个新的地址
+5. <Link>:  在应用程序周围提供声明式的,可访问的导航
+6. <NavLink>:  一个特殊版本的 Link，当它与当前 URL 匹配时，为其渲染元素添加样式属性(activeClassName)。
+7. <Switch>:  渲染与该地址匹配的第一个子节点 `<Route>` 或者 `<Redirect>`
+8.	<Route>:  基本的职责是在 location 与 Route 的 path 匹配时呈现一些 UI（path属性：匹配URL, element:匹配到URL渲染的组件）
+8.	<Routes>: Switch的升级版，包括对相对路由和链接，自动路由排名，嵌套路由和布局功能
+8.	<Outlet>: 为特定路由呈现任何匹配的子元素
 
 
-##	2.其他
+
+##	3.其他
 
 1.	history对象:  提供多种不同的形式来实现对 session 历史的管理
 
@@ -785,6 +787,8 @@ class App extends React.Component {
 ```javascript
 # 1.路由实例,新版本写法
 
+import { HashRouter, Link, Routes, Route } from 'react-router-dom'
+
 class App extends React.Component {
   render() {
     return (
@@ -792,13 +796,13 @@ class App extends React.Component {
           <Link to="/">
             <button>About</button>
           </Link>
-          <Link to="/home">
+          <Link to="/about">
             <button>Home</button>
           </Link>
          <Routes>
-      			// 旧版本写法： <Route path="/" conponent={About} /> , 新版本Route需要在Routes内
-            <Route path="/" element={<About />} />  
-            <Route path="/home" element={<Home />} />
+      		// 旧版本写法： <Route path="/" conponent={About} /> , 新版本Route需要在Routes内
+            <Route path="/" element={<Home />} />  
+            <Route path="/about" element={<About />} />
          </Routes>
         </HashRouter>
     )
