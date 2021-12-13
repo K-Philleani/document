@@ -810,7 +810,47 @@ class App extends React.Component {
 }
 ```
 
+##	4. v6的变化
 
+	###	1. react-router-dom将<Swtich>改为<Routes>
+
+- 优点：
+  	1.	代码更精简
+  	1.	路由是根据最佳匹配而不是按顺序
+  	1.	路由可以嵌套
+
+###	2. <Route> component 改为 `element`
+
+ -	优点：
+   1. 可以向组件传 props
+   2. 因为有了 hook 的出现，所以不必再通过 renderProps 向组件传递路由的一些 props，我们可以通过`useParams`、`useLocation` 就可以拿到这些信息
+
+### 3.	<Route> 简化了 `path` 的格式
+
+ - 	优点：
+    1. ​	只支持两种动态占位符： `:id` 样式参数, `*` 通配符，只能在 path 的末尾使用,如`users/*`
+
+###	4. useHistory => useNavigate
+
+```javascript
+# naviaget(to)默认就是 history.push
+// v6
+navigate('/home');
+//v5
+history.push('/home')
+
+# naviaget(to, { replace: true })就是 history.replace
+// v6
+navigate('/home', { replace: true });
+//v5
+history.replace('/home')
+
+# naviaget(to: number)就是 history.go
+navigate(1)
+navigate(0)
+navigate(-1)
+
+```
 
 
 
