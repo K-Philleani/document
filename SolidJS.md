@@ -53,7 +53,7 @@
 import { render } from 'solid-js/web'
 const App = () => {
     return (
-    	<div class="title">Hello, SolidJS<div>
+     <div class="title">Hello, SolidJS<div>
     )
 }
 
@@ -69,18 +69,18 @@ import { createSignal } from 'solid-js'
 const Parent = () => {
     const [greeting, setGreeting] = createSignal("Hello")
     return (
-    	<div>
-        	<Label greeting="greeting">
-        		<div>Jhon</div>
-        	</Label>
-        </div>
+      <div>
+        <Label greeting="greeting">
+          <div>Jhon</div>
+        </Label>
+      </div>
     )
 }
 
 const Label = (props) => {
     <>
-        <div>{ props.greeting }</div>
-    	{ props.children }
+      <div>{ props.greeting }</div>
+   	  { props.children }
     </>
 }
 ```
