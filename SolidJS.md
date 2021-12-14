@@ -43,6 +43,14 @@
 > npm run dev # or yarn or pnpm
 ```
 
+我们可以采用插件的形式，当做一个第三方库使用SolidJs,同样可以使用SolidJS的函数
+
+```shell
+> npm install solid-js
+```
+
+
+
 ### 3.1 入口和组件
 
 - 组件应为大驼峰写法，这里与React的组件相同，并且可以接受props对象并返回JSX元素， 组件第一个参数接收 props 对象，最终返回真实的 DOM 节点，所有JSX节点都是真是DOM,SolidJS没有虚拟DOM
