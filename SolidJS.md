@@ -120,7 +120,7 @@ function Counter() {
 
 
 
-### 3.4Effect
+### 3.4 Effect
 
 - effect为观察者，通过createEffect创建，接收一个函数，并监视其执行情况
 - `createEffect` 会自动订阅在执行期间读取的所有 Signal，并在这些 Signal 值之一发生变化时重新运行该函数
@@ -546,7 +546,7 @@ render(() => <Counter />, document.getElementById('app'))
 
 ## 6.绑定
 
-### 6.1事件
+### 6.1 事件
 
 - Solid 中的事件属性都会以 `on` 为前缀
 - 常见的 UI 事件（冒泡和组合）会自动委托给文档元素。为了提高委托性能，Solid 支持数组语法调用事件处理程序，我们使用数据作为第二个参数所以无需创建额外的闭包
@@ -598,7 +598,7 @@ render(() => <App />, document.getElementById('app'))
 
 
 
-### 6.2样式
+### 6.2 样式
 
 - Solid 中的 style 属性接受样式字符串或对象
 - Solid 通过调用 `style.setProperty` 的封装来进行样式设置。这意味着键需要采用破折号的形式，如 `background-color` 而不是 `backgroundColor`。 但这意味着我们可以设置 CSS 变量
@@ -652,7 +652,7 @@ let myDiv;
 
 
 
-### 6.4指令
+### 6.4 指令
 
 - 通过 `use:` 命名空间支持自定义指令。但这只是 `ref` 一个有用的语法糖，类似于原生的绑定，并且可以在同一个元素上有多个绑定而不会发生冲突。这可以让我们更好地利用可重用 DOM 元素行为
 - 自定义指令只是形式为 `(element, valueAccesor)` 的函数，其中 `valueAccessor` 是一个获取绑定值的函数。只要函数是在作用域中导入的，你就可以通过 `use:` 使用它
@@ -950,7 +950,7 @@ state.list.push(anotherValue);
 
 ## 9. Context
 
-### 9.1使用Context上下文
+### 9.1 使用Context上下文
 
 - Context 提供了一种依赖注入的形式。它可以用来避免需要通过中间组件将数据作为 props 传递的情况
 - 该函数创建了一个新的上下文对象，可以通过 `useContext` 来使用，并提供 `Provider` 控制流。当在层次结构的上方找不到 `Provider` 时，将使用默认上下文
@@ -1202,7 +1202,7 @@ render(() => <App />, document.getElementById("app"));
 
 
 
-### 11.2资源
+### 11.2 资源
 
 - Resource 是专门设计用于处理异步加载的特殊 Signal
 - 生成的 Resource Signal，还包含响应式 `loading` 和 `error` 属性，可以根据当前状态轻松控制我们的视图
@@ -1279,7 +1279,8 @@ export default function Greeting(props) {
 
 ### 11.3 Suspense List (实验)
 
-### `SuspenseList` 可以协调多个并行的 `Suspense` 和 `SuspenseList` 组件。它控制显示内容的顺序以减少布局抖动，并且可以通过选项控制折叠或隐藏回退状态
+- ### `SuspenseList` 可以协调多个并行的 `Suspense` 和 `SuspenseList` 组件。它控制显示内容的顺序以减少布局抖动，并且可以通过选项控制折叠或隐藏回退状态
+
 
 ```javascript
 <SuspenseList revealOrder="forwards" tail="collapsed">
