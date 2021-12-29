@@ -17,7 +17,7 @@
 
 ## 2.工作流程
 
-![](image/redux%E5%8E%9F%E7%90%86%E5%9B%BE.png)
+![redux原理图](https://s2.loli.net/2021/12/29/sCOwjS9xgP7AifU.png)
 
 ## 3. redux的三个核心概念
 
